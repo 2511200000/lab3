@@ -185,7 +185,7 @@ public class TblLoginDAO implements Serializable {
             stm = con.prepareStatement(sql);
             stm.setString(1, id);
             rs = stm.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 String userID = rs.getString("userID");
                 String fullname = rs.getString("fullname");
                 String password = rs.getString("password");

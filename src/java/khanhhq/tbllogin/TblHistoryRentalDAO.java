@@ -7,7 +7,6 @@ package khanhhq.tbllogin;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,8 +31,7 @@ public class TblHistoryRentalDAO implements Serializable {
 
                 String sql = "Insert into tblHistoryRental (historyID, rentalID, status, action, userID) "
                         + "Values(?, ?, ?, ?, ?)";
-                System.out.println("history");
-                stm = con.prepareStatement(sql);
+                 stm = con.prepareStatement(sql);
                 stm.setInt(1, historyID);
                 stm.setInt(2, rentalID);
                 stm.setString(3, status);
@@ -90,18 +88,21 @@ public class TblHistoryRentalDAO implements Serializable {
         return listHistoryRental;
     }
 
-    public void printHistoryRental() throws SQLException, NamingException {
+    public void printHistoryRental(String userIDCheck) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DbHelp.makeConnection();
-            String sql = "Select historyID, rentalID, status, action, userID from tblHistoryRental";
+            String sql = "Select historyID, rentalID, status, action, userID "
+                    + "from tblHistoryRental "
+                    + " where userID = ?";
             stm = con.prepareStatement(sql);
+            stm.setString(1, userIDCheck);
             rs = stm.executeQuery();
             while (rs.next()) {
-                int reantalID = rs.getInt("historyID");
-                int carID = rs.getInt("rentalID");
+                int historyID = rs.getInt("historyID");
+                int rentalID = rs.getInt("rentalID");
 
                 String userID = rs.getString("userID");
 //                tblItemDAO dao = new tblItemDAO();
@@ -112,7 +113,7 @@ public class TblHistoryRentalDAO implements Serializable {
                 String status = rs.getString("status");
                 String action = rs.getString("action");
 
-                TblHistoryRentalDTO dto = new TblHistoryRentalDTO(carID, reantalID, status, action, userID);
+                TblHistoryRentalDTO dto = new TblHistoryRentalDTO(historyID, rentalID, status, action, userID);
                 if (this.listHistoryRental == null) {
                     this.listHistoryRental = new ArrayList<>();
                 }

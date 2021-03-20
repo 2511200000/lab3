@@ -8,9 +8,7 @@ package khanhhq.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,15 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import khanhhq.cart.CartObject;
-import khanhhq.tbllogin.TblCarDTO;
 import khanhhq.tbllogin.TblCarsRentDetailsDAO;
 import khanhhq.tbllogin.TblCustomerDAO;
 import khanhhq.tbllogin.TblHistoryRentalDAO;
-import khanhhq.tbllogin.TblLoginDAO;
 import khanhhq.tbllogin.TblRentalDAO;
 import khanhhq.tbllogin.TblRentalDTO;
-import khanhhq.tbllogin.TblRoleDAO;
 import khanhhq.tbllogin.TblVoucherDAO;
 
 /**

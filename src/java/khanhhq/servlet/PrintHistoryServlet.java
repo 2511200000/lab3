@@ -47,18 +47,25 @@ public class PrintHistoryServlet extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+
+            String userID = (String) session.getAttribute("USERID");
             TblRentalDAO daoRental = new TblRentalDAO();
-            daoRental.printHistoryRental();
-            List<TblRentalDTO> rental = daoRental.getListRentalHistory();
-            if (rental != null) {
-                session.setAttribute("RENTAL", rental);
-            }
 
             TblHistoryRentalDAO dao = new TblHistoryRentalDAO();
-            dao.printHistoryRental();
+            dao.printHistoryRental(userID);
             List<TblHistoryRentalDTO> history = dao.getListHistoryRental();
+
+            for (int i = 0; i < history.size(); i++) {
+                daoRental.printRental(history.get(i).getRentalID());
+            }
+            List<TblRentalDTO> rental = daoRental.getListRentalHistory();
+            for (int i = 0; i < rental.size(); i++) {
+                System.out.println("rmene " + rental.get(i).getTotalAll());
+            }
+
             if (history != null) {
                 session.setAttribute("HISTORY", history);
+                session.setAttribute("RENTAL", rental);
                 url = HISTORY;
             }
 

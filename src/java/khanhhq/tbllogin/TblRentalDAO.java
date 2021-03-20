@@ -7,7 +7,6 @@ package khanhhq.tbllogin;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -134,16 +133,17 @@ public class TblRentalDAO implements Serializable {
         return listRentalHistory;
     }
     
-    public void printHistoryRental() throws SQLException, NamingException {
+    public void printRental(int rentalIDCheck) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
 
         try {
             con = DbHelp.makeConnection();
-            String sql = "Select rentalID,customerID,rentalDate,returnDate,totalAll,voucherID from tblRental";
+            String sql = "Select rentalID,customerID,rentalDate,returnDate,totalAll,voucherID from tblRental where rentalID = ?";
             stm = con.prepareStatement(sql);
-              rs = stm.executeQuery();
+            stm.setInt(1, rentalIDCheck);
+               rs = stm.executeQuery();
             while (rs.next()) {
                 int rentalID = rs.getInt("rentalID");
                 int customerID = rs.getInt("customerID");
