@@ -17,12 +17,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import khanhhq.tbllogin.TblCarDAO;
 import khanhhq.tbllogin.TblCarDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class SearchCarsServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(SearchCarsServlet.class.getName());
 
     private final String SEARCH = "searchCars.jsp";
 
@@ -74,8 +78,11 @@ public class SearchCarsServlet extends HttpServlet {
             request.setAttribute("PRICE", amountOfCar);
             request.setAttribute("categoryID", categoryID);
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } catch (NamingException e) {
+            BasicConfigurator.configure();
+            log.error("NamingException");
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

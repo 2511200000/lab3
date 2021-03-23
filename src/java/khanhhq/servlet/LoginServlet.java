@@ -17,12 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import khanhhq.tbllogin.TblLoginDAO;
 import khanhhq.tbllogin.TblRoleDAO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class LoginServlet extends HttpServlet {
+        private final Logger log = Logger.getLogger(LoginServlet.class.getName());
 
     private final String INVALID = "login.jsp";
     private final String DATA_USER = "PrintCarsServlet";
@@ -43,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String userID = request.getParameter("txtUsername");
         String Password = request.getParameter("txtPassword");
-//        String recaptch = request.getParameter("g-recaptcha-response");
+        String recaptch = request.getParameter("g-recaptcha-response");
         String url = INVALID;
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -58,9 +61,9 @@ public class LoginServlet extends HttpServlet {
             if (userID.isEmpty() || Password.isEmpty()) {
                 String msg = "user or password error";
                 request.setAttribute("ERRORLGOIN", msg);
-//            } else if (recaptch.isEmpty()) {
-//                String msg = "You must vertify reCAPTCHA";
-//                request.setAttribute("ERRORLGOIN", msg);
+            } else if (recaptch.isEmpty()) {
+                String msg = "You must vertify reCAPTCHA";
+                request.setAttribute("ERRORLGOIN", msg);
             } else {
                 if (!fulname.isEmpty()) {
                     String roleID = daoLogin.getRoleID(userID);
@@ -80,9 +83,11 @@ public class LoginServlet extends HttpServlet {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-            e.printStackTrace();
+             BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

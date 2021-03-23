@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class ConFirmServlet extends HttpServlet {
+        private final Logger log = Logger.getLogger(ConFirmServlet.class.getName());
 
     private final String CONFIRM = "confirm.jsp";
 
@@ -38,9 +40,10 @@ public class ConFirmServlet extends HttpServlet {
         String[] carID = request.getParameterValues("txtItemID");
 
         String[] quantity = request.getParameterValues("quantity");
-//        for (int i = 0; i < quantity.length; i++) {
-//            System.out.println("hihih " + quantity[i]);
-//        }
+      
+        String[] rentalDate = request.getParameterValues("rentalDate");
+
+        String[] returnDate = request.getParameterValues("returnDate");
 
         String[] price = request.getParameterValues("price");
 
@@ -55,10 +58,12 @@ public class ConFirmServlet extends HttpServlet {
 
             session.setAttribute("carID", carID);
             session.setAttribute("quantity", quantity);
+            session.setAttribute("rentalDate", rentalDate);
+            session.setAttribute("returnDate", returnDate);
             session.setAttribute("price", price);
             session.setAttribute("total", total);
             session.setAttribute("totalAll", totalAll);
-            
+
             url = CONFIRM;
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

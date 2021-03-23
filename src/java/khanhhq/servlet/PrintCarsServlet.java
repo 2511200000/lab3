@@ -20,12 +20,16 @@ import khanhhq.tbllogin.TblCarDAO;
 import khanhhq.tbllogin.TblCarDTO;
 import khanhhq.tbllogin.TblCategoryDAO;
 import khanhhq.tbllogin.TblCategoryDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class PrintCarsServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(PrintCarsServlet.class.getName());
 
     private String DATA = "search.jsp";
 
@@ -87,9 +91,11 @@ public class PrintCarsServlet extends HttpServlet {
             request.setAttribute("INDEX", index);
             request.setAttribute("STATUS", status);
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

@@ -21,22 +21,20 @@ import khanhhq.utilities.DbHelp;
  */
 public class TblRentalDAO implements Serializable {
 
-    public boolean createOrder(int rentalID, int customerID, String rentalDate, String returnDate, float totalAll,String voucher) throws NamingException, SQLException {
+    public boolean createOrder(int rentalID, int customerID, float totalAll,String voucher) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-         System.out.println("rentalID " + rentalID);
-        try {
+         try {
             con = DbHelp.makeConnection();
             if (con != null) {
-                String sql = "Insert into tblRental(rentalID,customerID,rentalDate,returnDate,totalAll,voucherID)"
-                        + "Values(?, ?, ?, ?, ?, ?)";
+                String sql = "Insert into tblRental(rentalID,customerID,totalAll,voucherID)"
+                        + "Values(?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, rentalID);
                 stm.setInt(2, customerID);
-                stm.setString(3, rentalDate);
-                stm.setString(4, returnDate);
-                stm.setFloat(5, totalAll);
-                stm.setString(6, voucher);
+              
+                stm.setFloat(3, totalAll);
+                stm.setString(4, voucher);
                 int row = stm.executeUpdate();
 
                 if (row > 0) {
@@ -67,7 +65,7 @@ public class TblRentalDAO implements Serializable {
 
         try {
             con = DbHelp.makeConnection();
-            String sql = "Select rentalID,customerID,rentalDate,returnDate,totalAll,voucherID from tblRental where rentalID = ? AND customerID = ?";
+            String sql = "Select rentalID,customerID,totalAll,voucherID from tblRental where rentalID = ? AND customerID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, billMAX);
             stm.setInt(2, customerBillId);
@@ -75,11 +73,10 @@ public class TblRentalDAO implements Serializable {
             while (rs.next()) {
                 int rentalID = rs.getInt("rentalID");
                 int customerID = rs.getInt("customerID");
-                String rentalDate = rs.getString("rentalDate");
-                String returnDate = rs.getString("returnDate");
+               
                 float totalAll = rs.getFloat("totalAll");
                 String voucherID = rs.getString("voucherID");
-                TblRentalDTO dto = new  TblRentalDTO(rentalID, customerID, rentalDate, returnDate, totalAll, voucherID);
+                TblRentalDTO dto = new  TblRentalDTO(rentalID, customerID, totalAll, voucherID);
                 if (this.listRental == null) {
                     this.listRental = new ArrayList<>();
                 }
@@ -140,18 +137,17 @@ public class TblRentalDAO implements Serializable {
 
         try {
             con = DbHelp.makeConnection();
-            String sql = "Select rentalID,customerID,rentalDate,returnDate,totalAll,voucherID from tblRental where rentalID = ?";
+            String sql = "Select rentalID,customerID,totalAll,voucherID from tblRental where rentalID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, rentalIDCheck);
                rs = stm.executeQuery();
             while (rs.next()) {
                 int rentalID = rs.getInt("rentalID");
                 int customerID = rs.getInt("customerID");
-                String rentalDate = rs.getString("rentalDate");
-                String returnDate = rs.getString("returnDate");
+              
                 float totalAll = rs.getFloat("totalAll");
                 String voucherID = rs.getString("voucherID");
-                TblRentalDTO dto = new  TblRentalDTO(rentalID, customerID, rentalDate, returnDate, totalAll, voucherID);
+                TblRentalDTO dto = new  TblRentalDTO(rentalID, customerID, totalAll, voucherID);
                 if (this.listRentalHistory == null) {
                     this.listRentalHistory = new ArrayList<>();
                 }

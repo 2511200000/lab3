@@ -18,14 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import khanhhq.tbllogin.TblHistoryRentalDAO;
 import khanhhq.tbllogin.TblHistoryRentalDTO;
-import khanhhq.tbllogin.TblRentalDAO;
-import khanhhq.tbllogin.TblRentalDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class PrintHistoryServlet extends HttpServlet {
+        private final Logger log = Logger.getLogger(PrintHistoryServlet.class.getName());
 
     private final String HISTORY = "history.jsp";
     private final String DATA = "search.jsp";
@@ -49,30 +50,24 @@ public class PrintHistoryServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             String userID = (String) session.getAttribute("USERID");
-            TblRentalDAO daoRental = new TblRentalDAO();
-
+ 
             TblHistoryRentalDAO dao = new TblHistoryRentalDAO();
             dao.printHistoryRental(userID);
             List<TblHistoryRentalDTO> history = dao.getListHistoryRental();
-
-            for (int i = 0; i < history.size(); i++) {
-                daoRental.printRental(history.get(i).getRentalID());
-            }
-            List<TblRentalDTO> rental = daoRental.getListRentalHistory();
-            for (int i = 0; i < rental.size(); i++) {
-                System.out.println("rmene " + rental.get(i).getTotalAll());
-            }
-
-            if (history != null) {
+            
+             if (history != null) {
                 session.setAttribute("HISTORY", history);
-                session.setAttribute("RENTAL", rental);
+                 url = HISTORY;
+            }else{
                 url = HISTORY;
             }
 
         } catch (SQLException e) {
-
+              BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+              BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

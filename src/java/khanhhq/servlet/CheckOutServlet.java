@@ -22,12 +22,16 @@ import khanhhq.tbllogin.TblHistoryRentalDAO;
 import khanhhq.tbllogin.TblRentalDAO;
 import khanhhq.tbllogin.TblRentalDTO;
 import khanhhq.tbllogin.TblVoucherDAO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class CheckOutServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(CheckOutServlet.class.getName());
 
     private final String SEARCH = "search.jsp";
     private final String CHECK_OUT = "checkOut.jsp";
@@ -49,18 +53,21 @@ public class CheckOutServlet extends HttpServlet {
         String customerName = request.getParameter("txtCustomer");
         String address = request.getParameter("txtAddress");
         String phoneNumber = request.getParameter("txtPhonenumber");
-        String rentalDate = request.getParameter("txtRentalDate");
-        String returnDate = request.getParameter("txtReturnDate");
         String discount = request.getParameter("txtDiscount");
-
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
         String button = request.getParameter("btAction");
-        float totalAllFloat = 0;
-        float pricePromotion = 0;
-        int count = 0;
+
         String url = SEARCH;
         try {
             HttpSession session = request.getSession();
             String[] carID = (String[]) session.getAttribute("carID");
+
+            String[] rentalDate = (String[]) session.getAttribute("rentalDate");
+            
+
+            String[] returnDate = (String[]) session.getAttribute("returnDate");
+            
 
             String[] quantity = (String[]) session.getAttribute("quantity");
 
@@ -76,10 +83,10 @@ public class CheckOutServlet extends HttpServlet {
             int idCustomer = daoCustomer.printIdCustomer();
             if (idCustomer == 0) {
                 idCustomer++;
-                daoCustomer.createCustomer(idCustomer, customerName, address, phoneNumber, rentalDate, returnDate);
+                daoCustomer.createCustomer(idCustomer, customerName, address, phoneNumber);
             } else {
                 idCustomer++;
-                daoCustomer.createCustomer(idCustomer, customerName, address, phoneNumber, rentalDate, returnDate);
+                daoCustomer.createCustomer(idCustomer, customerName, address, phoneNumber);
             }
 
             TblRentalDAO daoRental = new TblRentalDAO();
@@ -91,30 +98,27 @@ public class CheckOutServlet extends HttpServlet {
             }
 
             if (totalDiscount != null) {
-                daoRental.createOrder(idRentalID, idCustomer, rentalDate, returnDate, totalDiscount, discount);
+                daoRental.createOrder(idRentalID, idCustomer, totalDiscount, discount);
             } else if (totalDiscount == null) {
-                daoRental.createOrder(idRentalID, idCustomer, rentalDate, returnDate, totalALl, null);
+                daoRental.createOrder(idRentalID, idCustomer, totalALl, null);
 
             }
             TblCarsRentDetailsDAO daoRentalDetail = new TblCarsRentDetailsDAO();
             for (int i = 0; i < carID.length; i++) {
-                daoRentalDetail.createOrderDetails(idRentalID, carID[i], Integer.parseInt(quantity[i]), Float.parseFloat(price[i]), Float.parseFloat(price[i]) * Float.parseFloat(quantity[i]));
+                daoRentalDetail.createOrderDetails(idRentalID, carID[i], Integer.parseInt(quantity[i]), Float.parseFloat(price[i]), Float.parseFloat(price[i]) * Float.parseFloat(quantity[i]), rentalDate[i], returnDate[i]);
             }
 
             TblVoucherDAO daoVoucher = new TblVoucherDAO();
             daoVoucher.updateVoucher("456", discount);
 
             TblHistoryRentalDAO daoHistory = new TblHistoryRentalDAO();
-            int idHistory = daoRental.printIdOrder();
-            if (idHistory == 0) {
+//            int idHistory = daoRental.printIdOrder();
+            for (int i = 0; i < carID.length; i++) {
+                int idHistory = daoHistory.printIdOrder();
                 idHistory++;
-            } else {
-                idHistory++;
+                daoHistory.createHistoryRental(idHistory, idRentalID, "123", button, userID, date, carID[i]);
             }
 
-            boolean ressult = daoHistory.createHistoryRental(idHistory, idRentalID, "123", button, userID);
-                    System.out.println("ressult  " + ressult);
-            System.out.println("khohohoho");
             daoRental.printOrder(idRentalID, idCustomer);
             List<TblRentalDTO> result = daoRental.getListRental();
             if (result != null) {
@@ -127,9 +131,11 @@ public class CheckOutServlet extends HttpServlet {
             session.removeAttribute("totalDiscount");
             /* TODO output your page here. You may use following sample code. */
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

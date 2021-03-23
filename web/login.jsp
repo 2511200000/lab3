@@ -25,13 +25,13 @@
                 <form action="DispatchServlet" method="POST">
                     Username: <input id="txtTextfile" type="text" name="txtUsername" value="" /><br>
                     Password: <input id="txtTextfile" type="password" name="txtPassword" value="" /><br>
-<!--                                <div class="g-recaptcha" id="captcha" data-sitekey="6LfU2n0aAAAAACz1AZNl3ZQtKnS0o87v_3SldRA1" ></div><br>-->
+                                <div class="g-recaptcha" id="captcha" data-sitekey="6LfU2n0aAAAAACz1AZNl3ZQtKnS0o87v_3SldRA1" ></div><br>
                     <div  class="btLogin">
                         <input id="buttonLogin" type="submit" value="Login" name="btAction" />
                         <input id="buttonLoginReset" type="reset" value="Reset" /><br>
                     </div>
 
-
+                    <a href="https://www.facebook.com/dialog/oauth?client_id=359123991240252&redirect_uri=https://localhost:8084/J3.L.P0015/LoginServlet">Login Facebook</a>
                     <a href="createAccount.jsp">Create New Account</a>
                     <br/>
                 </form>

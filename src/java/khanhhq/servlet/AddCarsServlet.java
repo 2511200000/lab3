@@ -17,12 +17,16 @@ import javax.servlet.http.HttpSession;
 import khanhhq.cart.CartObject;
 import khanhhq.tbllogin.TblCarDAO;
 import khanhhq.tbllogin.TblCarDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class AddCarsServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(AddCarsServlet.class.getName());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +42,6 @@ public class AddCarsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String urlRewriting = "PrintCarsServlet";
-        String [] quantity;
         try {
             /* TODO output your page here. You may use following sample code. */
             TblCarDAO daoCar = new TblCarDAO();
@@ -47,21 +50,23 @@ public class AddCarsServlet extends HttpServlet {
             if (fullname != null) {
                 String item = request.getParameter("txtItemID");
                 TblCarDTO dto = daoCar.findItemByID(item);
-                 CartObject cart = (CartObject) session.getAttribute("CUSTCART");
+                CartObject cart = (CartObject) session.getAttribute("CUSTCART");
                 if (cart == null) {
                     cart = new CartObject();
 
                 }
                 cart.addtemToCart(dto);
-             
-                 session.setAttribute("CUSTCART", cart);
+
+                session.setAttribute("CUSTCART", cart);
             } else {
                 urlRewriting = "login.jsp";
             }
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             response.sendRedirect(urlRewriting);
             out.close();

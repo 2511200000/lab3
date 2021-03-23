@@ -15,16 +15,13 @@ public class TblRentalDTO implements Serializable {
 
     private int rentalID;
     private int customerID;
-    String rentalDate;
-    String returnDate;
     private float totalAll;
     String voucher;
+   
 
-    public TblRentalDTO(int rentalID, int customerID, String rentalDate, String returnDate, float totalAll, String voucher) {
+    public TblRentalDTO(int rentalID, int customerID, float totalAll, String voucher) {
         this.rentalID = rentalID;
         this.customerID = customerID;
-        this.rentalDate = rentalDate;
-        this.returnDate = returnDate;
         this.totalAll = totalAll;
         this.voucher = voucher;
     }
@@ -45,22 +42,6 @@ public class TblRentalDTO implements Serializable {
         this.customerID = customerID;
     }
 
-    public String getRentalDate() {
-        return rentalDate;
-    }
-
-    public void setRentalDate(String rentalDate) {
-        this.rentalDate = rentalDate;
-    }
-
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
-
     public float getTotalAll() {
         return totalAll;
     }
@@ -76,6 +57,8 @@ public class TblRentalDTO implements Serializable {
     public void setVoucher(String voucher) {
         this.voucher = voucher;
     }
+
+    
 
     
     

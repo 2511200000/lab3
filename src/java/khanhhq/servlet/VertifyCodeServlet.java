@@ -17,12 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import khanhhq.tbllogin.TblLoginDAO;
 import khanhhq.tbllogin.TblLoginDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class VertifyCodeServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(UpdateHistoryServlet.class.getName());
 
     private final String FAIL = "vertify.jsp";
     private final String SUCCESS = "login.jsp";
@@ -58,9 +62,11 @@ public class VertifyCodeServlet extends HttpServlet {
                 request.setAttribute("VERTIFY", msg);
             }
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

@@ -26,12 +26,15 @@
                             <th class="columnAdmin">Quantity</th>
                             <th class="columnAdmin">price</th>
                             <th class="columnAdmin">total</th>
+                            <th class="columnAdmin">rentalDate</th>
+                            <th class="columnAdmin">returnDate</th>
                             <th class="columnAdmin">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     <form action="DispatchServlet">
                         <c:forEach var="entry" items="${cart.items}" varStatus="counter">
+
                             <tr>
                                 <td class="rowAdmin">
                                     ${counter.count}
@@ -54,14 +57,21 @@
                                     <span id="total${entry.key.carID}">${entry.key.price * entry.value}</span>
                                     <input type="hidden" name="total" value="${entry.key.price * entry.value}" id="totalAll${entry.key.carID}" />
                                 </td>
-
+                                <td>
+                                    <input type="date" name="rentalDate" value="${entry.key.carID}" />
+                                </td>
+                                <td>
+                                    <input type="date" name="returnDate" value="${entry.key.carID}" />
+                                </td>
                                 <td class="rowAdmin">
                                     <input type="checkbox" name="chkItem" value="${entry.key.carID}" />
                                 </td>
+
                             </tr>
+
                         </c:forEach>
                         <tr>
-                            <td colspan="2" class="rowAdmin">
+                            <td colspan="4" class="rowAdmin">
                                 <a href="DispatchServlet">Add more books to your cart</a>
                             </td>
                             <td colspan="3">
@@ -79,10 +89,11 @@
                                        value="RemoveSelectedCars" name="btAction" />
                             </td>
                         </tr>
-
                         <input type="submit" value="Confirm" name="btAction" />
-
                     </form>
+
+
+
                     </tbody>
                 </table>
             </div>

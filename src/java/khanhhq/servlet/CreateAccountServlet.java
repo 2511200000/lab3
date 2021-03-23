@@ -18,12 +18,16 @@ import javax.servlet.http.HttpSession;
 import khanhhq.tbllogin.TblLoginDAO;
 import khanhhq.tbllogin.TblLoginDTO;
 import khanhhq.vertify.SendMail;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class CreateAccountServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(CreateAccountServlet.class.getName());
 
     private final String FAIL = "createAccount.jsp";
     private final String SUCCESS = "vertify.jsp";
@@ -61,7 +65,7 @@ public class CreateAccountServlet extends HttpServlet {
                 SendMail sm = new SendMail();
 
                 String code = sm.getCodeRandom();
-                 TblLoginDAO daoLogin = new TblLoginDAO();
+                TblLoginDAO daoLogin = new TblLoginDAO();
 
                 daoLogin.createAccount(txtEmail, fullName, password, "123", "123", code);
 
@@ -85,8 +89,11 @@ public class CreateAccountServlet extends HttpServlet {
                 String msg = "Email is exist";
                 request.setAttribute("CREATERR", msg);
             }
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
-
+            BasicConfigurator.configure();
+            log.error("NamingException");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

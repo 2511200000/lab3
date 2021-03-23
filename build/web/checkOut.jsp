@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <link rel="stylesheet" href="CSS/car.css">
+        <link rel="stylesheet" href="CSS/car.css">
         <title>CheckOut</title>
     </head>
     <body>
@@ -25,21 +25,16 @@
                         <tr>
                             <th  class="columnAdmin">No.</th>
                             <th  class="columnAdmin">customerID</th>
-                            <th  class="columnAdmin">rentalDate</th>
-                            <th  class="columnAdmin">returnDate</th>
                             <th  class="columnAdmin">totalAll</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         <c:forEach var="dto" items="${cart}" varStatus="counter">
                         <form action="DispatchServlet">
                             <tr>
                                 <td class="rowAdmin">${counter.count}
                                     .</td>
                                 <td class="rowAdmin">${dto.customerID}</td>
-                                <td class="rowAdmin">${dto.rentalDate}</td>
-                                <td class="rowAdmin">${dto.returnDate}</td>
                                 <td class="rowAdmin">${dto.totalAll}</td>
                             </tr>
                         </form>

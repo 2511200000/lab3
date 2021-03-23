@@ -18,12 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import khanhhq.tbllogin.TblVoucherDAO;
 import khanhhq.tbllogin.TblVouchersDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
 public class CheckVoucherServlet extends HttpServlet {
+
+    private final Logger log = Logger.getLogger(CheckVoucherServlet.class.getName());
 
     private String CONFIRM = "confirm.jsp";
 
@@ -41,8 +45,7 @@ public class CheckVoucherServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String txtVoucher = request.getParameter("txtDiscount");
-        System.out.println("txtVoucher " + txtVoucher);
-        String url = CONFIRM;
+         String url = CONFIRM;
         try {
             /* TODO output your page here. You may use following sample code. */
             TblVoucherDAO dao = new TblVoucherDAO();
@@ -70,8 +73,11 @@ public class CheckVoucherServlet extends HttpServlet {
             sessoion.setAttribute("discount", discount);
             sessoion.setAttribute("totalDiscount", totalDiscount);
         } catch (SQLException e) {
-
+            BasicConfigurator.configure();
+            log.error("SQLException");
         } catch (NamingException e) {
+            BasicConfigurator.configure();
+            log.error("NamingException");
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

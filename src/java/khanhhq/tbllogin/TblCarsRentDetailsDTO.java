@@ -17,13 +17,17 @@ public class TblCarsRentDetailsDTO implements Serializable{
     private int quantity;
     private float price;
     private float total;
+    String rentalDate;
+    String returnDate;
 
-    public TblCarsRentDetailsDTO(int billID, String carID, int quantity, float price, float total) {
+    public TblCarsRentDetailsDTO(int billID, String carID, int quantity, float price, float total, String rentalDate, String returnDate) {
         this.billID = billID;
         this.carID = carID;
         this.quantity = quantity;
         this.price = price;
         this.total = total;
+        this.rentalDate = rentalDate;
+        this.returnDate = returnDate;
     }
 
     public int getBillID() {
@@ -65,6 +69,23 @@ public class TblCarsRentDetailsDTO implements Serializable{
     public void setTotal(float total) {
         this.total = total;
     }
-    
+
+    public String getRentalDate() {
+        return rentalDate;
+    }
+
+    public void setRentalDate(String rentalDate) {
+        this.rentalDate = rentalDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
+    }
+
+     
     
 }

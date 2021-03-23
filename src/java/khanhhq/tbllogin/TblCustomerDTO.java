@@ -16,16 +16,12 @@ public class TblCustomerDTO implements Serializable{
     private String customerName;
     private String address;
     private String phoneNumber;
-    String rentalDate;
-    String returnDate;
 
-    public TblCustomerDTO(int customerID, String customerName, String address, String phoneNumber, String rentalDate, String returnDate) {
+    public TblCustomerDTO(int customerID, String customerName, String address, String phoneNumber) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.rentalDate = rentalDate;
-        this.returnDate = returnDate;
     }
 
     public int getCustomerID() {
@@ -59,22 +55,9 @@ public class TblCustomerDTO implements Serializable{
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+     
 
-    public String getRentalDate() {
-        return rentalDate;
-    }
-
-    public void setRentalDate(String rentalDate) {
-        this.rentalDate = rentalDate;
-    }
-
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
+    
 
    
 

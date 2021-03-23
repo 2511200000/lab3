@@ -60,6 +60,14 @@
         <servlet-name>PrintHistoryServlet</servlet-name>
         <servlet-class>khanhhq.servlet.PrintHistoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchHistoryServlet</servlet-name>
+        <servlet-class>khanhhq.servlet.SearchHistoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateHistoryServlet</servlet-name>
+        <servlet-class>khanhhq.servlet.UpdateHistoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatchServlet</servlet-name>
         <url-pattern>/DispatchServlet</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>PrintHistoryServlet</servlet-name>
         <url-pattern>/PrintHistoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchHistoryServlet</servlet-name>
+        <url-pattern>/SearchHistoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateHistoryServlet</servlet-name>
+        <url-pattern>/UpdateHistoryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

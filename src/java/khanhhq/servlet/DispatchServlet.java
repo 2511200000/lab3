@@ -35,6 +35,7 @@ public class DispatchServlet extends HttpServlet {
     private final String HISTORY = "PrintHistoryServlet";
     private final String DETAIL_HISTORY = "DetailHistoryServlet";
     private final String UPDATE_HISTORY = "UpdateHistoryServlet";
+    private final String SEARCH_HISTORY = "SearchHistoryServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -83,6 +84,8 @@ public class DispatchServlet extends HttpServlet {
                 url =DETAIL_HISTORY;
             }else if(button.equals("Update")){
                 url = UPDATE_HISTORY;
+            }else if(button.equals("SearchHistory")){
+                url = SEARCH_HISTORY;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

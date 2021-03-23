@@ -6,6 +6,7 @@
 package khanhhq.tbllogin;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -18,13 +19,17 @@ public class TblHistoryRentalDTO implements Serializable {
     private String status;
     private String action;
     private String userID;
+    private Date bookingDate;
+    private String carID;
 
-    public TblHistoryRentalDTO(int historyID, int rentalID, String status, String action, String userID) {
+    public TblHistoryRentalDTO(int historyID, int rentalID, String status, String action, String userID, Date bookingDate, String carID) {
         this.historyID = historyID;
         this.rentalID = rentalID;
         this.status = status;
         this.action = action;
         this.userID = userID;
+        this.bookingDate = bookingDate;
+        this.carID = carID;
     }
 
     public int getHistoryID() {
@@ -67,4 +72,21 @@ public class TblHistoryRentalDTO implements Serializable {
         this.userID = userID;
     }
 
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public String getCarID() {
+        return carID;
+    }
+
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }
+
+  
 }

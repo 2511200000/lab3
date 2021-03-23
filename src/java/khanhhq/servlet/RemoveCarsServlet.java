@@ -46,6 +46,7 @@ public class RemoveCarsServlet extends HttpServlet {
                         }
                         session.setAttribute("CUSTCART", cart);
                     }
+                  
                 }
 
             }

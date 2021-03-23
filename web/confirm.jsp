@@ -29,8 +29,7 @@
                     Customname: <input id="txtTextfile" type="text" name="txtCustomer" value="" /><br>
                     Address: <input id="txtTextfile" type="text" name="txtAddress" value="" /><br>
                     Phonenumber: <input id="txtTextfile" type="text" name="txtPhonenumber" value="" /><br>
-                    RentalDate <input id="txtTextfile" type="date" name="txtRentalDate" value="" /><br>
-                    ReturnDate <input id="txtTextfile" type="date" name="txtReturnDate" value="" /><br>
+                  
 
                     <c:set var="total" value="${sessionScope.totalAll}" />
                     <c:if test="${not empty total}">

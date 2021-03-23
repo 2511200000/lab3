@@ -19,22 +19,20 @@ import khanhhq.utilities.DbHelp;
  */
 public class TblCustomerDAO implements Serializable {
 
-    public boolean createCustomer(int id, String customerName, String address, String phoneNumber, String rentalDate, String returnDate) throws NamingException, SQLException {
+    public boolean createCustomer(int id, String customerName, String address, String phoneNumber) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-        System.out.println("id " + id);
-        try {
+         try {
             con = DbHelp.makeConnection();
             if (con != null) {
-                String sql = "Insert into tblCustomer(customerID, customerName, address, phoneNumber, rentalDate, returnDate)"
-                        + "Values(?, ?, ?, ?, ?, ?)";
+                String sql = "Insert into tblCustomer(customerID, customerName, address, phoneNumber)"
+                        + "Values(?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 stm.setString(2, customerName);
                 stm.setString(3, address);
                 stm.setString(4, phoneNumber);
-                stm.setString(5, rentalDate);
-                stm.setString(6, returnDate);
+             
                 int row = stm.executeUpdate();
 
                 if (row > 0) {
